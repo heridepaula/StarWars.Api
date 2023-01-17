@@ -1,4 +1,6 @@
 ﻿using MediatR;
+using Microsoft.Extensions.Logging;
+using StarWars.Application.Features.DeletePlanetById.UseCase;
 using StarWars.Application.Features.FetchPlanets.Models;
 using StarWars.Application.Shared.Domain.Entities;
 using StarWars.Application.Shared.Domain.Interfaces;
@@ -8,10 +10,13 @@ namespace StarWars.Application.Features.FetchPlanets.UseCase
 {
     public class FetchPlanetsUseCase : IRequestHandler<FetchPlanetsInput, Output<IEnumerable<Planet>>>
     {
+        private readonly ILogger<FetchPlanetsUseCase> _logger;
         private readonly IStarWarsRepository _starWarsRepository;
 
-        public FetchPlanetsUseCase(IStarWarsRepository starWarsRepository)
+        public FetchPlanetsUseCase(ILogger<FetchPlanetsUseCase> logger, 
+                                   IStarWarsRepository starWarsRepository)
         {
+            _logger = logger;
             _starWarsRepository = starWarsRepository;
         }
 
@@ -26,8 +31,9 @@ namespace StarWars.Application.Features.FetchPlanets.UseCase
 
                 return output;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex, "[{Event} - {Message}]", nameof(FetchPlanetsUseCase), ex.Message);
                 throw;
             }
         }

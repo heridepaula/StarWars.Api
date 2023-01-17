@@ -365,3 +365,4 @@ FodyWeavers.xsd
 /StarWars.WebApi/StarWars.db-shm
 /StarWars.WebApi/StarWars.db-wal
 /StarWars.WebApi/StarWars.db
+/StarWars.WebApi/logs/logs20230117.txt

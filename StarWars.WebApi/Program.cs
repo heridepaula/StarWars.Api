@@ -1,3 +1,4 @@
+using Serilog;
 using StarWars.Application.Features.DeletePlanetById.DependencyInjection;
 using StarWars.Application.Features.GetFilmById.DependencyInjection;
 using StarWars.Application.Features.GetPlanetByName.DependencyInjection;
@@ -12,6 +13,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers()
                 .AddJsonOptions(x =>
                     x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Information()
+    .WriteTo.File($"./logs/StarWarsApi.txt", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
+
+// Add services to the container.
+builder.Services.AddRazorPages();
+builder.Logging.ClearProviders();
+builder.Services.AddLogging(loggingBuilder =>
+          loggingBuilder.AddSerilog(dispose: true));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

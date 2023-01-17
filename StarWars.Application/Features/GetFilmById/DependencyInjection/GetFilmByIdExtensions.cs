@@ -1,10 +1,12 @@
 ﻿using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using StarWars.Application.Features.GetFilmById.UseCase;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
 namespace StarWars.Application.Features.GetFilmById.DependencyInjection
 {
+    [ExcludeFromCodeCoverage]
     public static class GetFilmByIdExtensions
     {
         public static IServiceCollection AddGetFilmByIdExtensions(this IServiceCollection services) =>

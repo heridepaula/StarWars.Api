@@ -1,5 +1,7 @@
 ﻿using MediatR;
+using Microsoft.Extensions.Logging;
 using StarWars.Application.Features.GetFilmById.Models;
+using StarWars.Application.Features.GetPlanetByName.UseCase;
 using StarWars.Application.Features.LoadPlanetById.Models;
 using StarWars.Application.Shared.Domain.Entities;
 using StarWars.Application.Shared.Domain.Interfaces;
@@ -11,14 +13,17 @@ namespace StarWars.Application.Features.LoadPlanetById.UseCase
 {
     public class LoadPlanetByIdUseCase : IRequestHandler<LoadPlanetByIdInput, Output<Planet>>
     {
+        private readonly ILogger<LoadPlanetByIdUseCase> _logger;
         private readonly IMediator _mediator;
         private readonly IStarWarsApiService _starWarsApiService;
         private readonly IStarWarsRepository _starWarsRepository;
 
-        public LoadPlanetByIdUseCase(IMediator mediator,
-                                     IStarWarsApiService starWarsApiService, 
+        public LoadPlanetByIdUseCase(ILogger<LoadPlanetByIdUseCase> logger,
+                                     IMediator mediator,
+                                     IStarWarsApiService starWarsApiService,
                                      IStarWarsRepository starWarsRepository)
         {
+            _logger = logger;
             _mediator = mediator;
             _starWarsApiService = starWarsApiService;
             _starWarsRepository = starWarsRepository;
@@ -31,12 +36,18 @@ namespace StarWars.Application.Features.LoadPlanetById.UseCase
                 var planet = await _starWarsRepository.GetPlanetByIdAsync(request.Id, cancellationToken);
 
                 if (planet is not null)
+                {
+                    _logger.LogInformation("[{Event}] - Planet Id {Id} already been registered in database", nameof(LoadPlanetByIdUseCase), request.Id);
                     return new Output<Planet>(planet);
+                }
 
                 var planetApiResponse = await _starWarsApiService.GetPlanetByIdAsync(request.Id, cancellationToken);
 
                 if (planetApiResponse is null)
+                {
+                    _logger.LogWarning("[{Event}] - Planet Id {Id} not found in Api", nameof(LoadPlanetByIdUseCase), request.Id);
                     return new Output<Planet>(planet);
+                }
 
                 planet = new Planet
                 {
@@ -52,8 +63,9 @@ namespace StarWars.Application.Features.LoadPlanetById.UseCase
 
                 return new Output<Planet>(planet);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex, "[{Event} - {Message}]", nameof(LoadPlanetByIdUseCase), ex.Message);
                 throw;
             }
         }
@@ -66,7 +78,11 @@ namespace StarWars.Application.Features.LoadPlanetById.UseCase
             var tasks = links.Select(async link =>
             {
                 var id = link.GetRouteParamValue();
+
+                _logger.LogInformation("[{Event}] - Sending request to get film Id {id}", nameof(LoadPlanetByIdUseCase), id);
+
                 var response = await _mediator.Send(new GetFilmByIdInput(id));
+
                 bag.Add(response);
             });
 

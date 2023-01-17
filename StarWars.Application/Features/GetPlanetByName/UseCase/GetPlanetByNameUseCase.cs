@@ -1,4 +1,6 @@
 ﻿using MediatR;
+using Microsoft.Extensions.Logging;
+using StarWars.Application.Features.GetPlanetById.UseCase;
 using StarWars.Application.Features.GetPlanetByName.Models;
 using StarWars.Application.Shared.Domain.Entities;
 using StarWars.Application.Shared.Domain.Interfaces;
@@ -8,10 +10,13 @@ namespace StarWars.Application.Features.GetPlanetByName.UseCase
 {
     public class GetPlanetByNameUseCase : IRequestHandler<GetPlanetByNameInput, Output<IEnumerable<Planet>>>
     {
+        private readonly ILogger<GetPlanetByNameUseCase> _logger;
         private readonly IStarWarsRepository _starWarsRepository;
 
-        public GetPlanetByNameUseCase(IStarWarsRepository starWarsRepository)
+        public GetPlanetByNameUseCase(ILogger<GetPlanetByNameUseCase> logger,
+                                      IStarWarsRepository starWarsRepository)
         {
+            _logger = logger;
             _starWarsRepository = starWarsRepository;
         }
 
@@ -26,8 +31,9 @@ namespace StarWars.Application.Features.GetPlanetByName.UseCase
                 
                 return result;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex, "[{Event} - {Message}]", nameof(GetPlanetByNameUseCase), ex.Message);
                 throw;
             }
         }

@@ -1,10 +1,12 @@
 ﻿using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using StarWars.Application.Features.LoadPlanetById.UseCase;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
 namespace StarWars.Application.Features.LoadPlanetById.DependencyInjection
 {
+    [ExcludeFromCodeCoverage]
     public static class LoadPlanetByIdExtensions
     {
         public static IServiceCollection AddLoadPlanetByIdExtensions(this IServiceCollection services)
