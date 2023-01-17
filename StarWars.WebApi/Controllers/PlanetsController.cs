@@ -15,6 +15,7 @@ namespace StarWars.WebApi.Controllers
     [Produces("application/json")]
     public class PlanetsController : Controller
     {
+        private ILogger<PlanetsController> _logger;
         private readonly IMediator _mediator;
 
         public PlanetsController(IMediator mediator)

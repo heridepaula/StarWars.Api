@@ -27,7 +27,7 @@ builder.Services.AddLogging(loggingBuilder =>
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDataBaseExtensions();
+builder.Services.AddDataBaseExtensions(builder.Configuration);
 builder.Services.AddLoadPlanetByIdExtensions();
 builder.Services.AddGetFilmByIdExtensions();
 builder.Services.AddGetPlanetByNameExtensions();
