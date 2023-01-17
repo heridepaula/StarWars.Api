@@ -3,9 +3,35 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0298F7DD-5B4C-464D-8A79-291444B98853}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{7DF9BD4F-0A94-4DA4-9BBA-9B4096815393}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarWars.Application", "StarWars.Application\StarWars.Application.csproj", "{B69EDF43-5192-4CDF-BE87-8B505CC98F33}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarWars.WebApi", "StarWars.WebApi\StarWars.WebApi.csproj", "{00300300-A716-45CF-9E27-DD15302F0FB4}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B69EDF43-5192-4CDF-BE87-8B505CC98F33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B69EDF43-5192-4CDF-BE87-8B505CC98F33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B69EDF43-5192-4CDF-BE87-8B505CC98F33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B69EDF43-5192-4CDF-BE87-8B505CC98F33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00300300-A716-45CF-9E27-DD15302F0FB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00300300-A716-45CF-9E27-DD15302F0FB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00300300-A716-45CF-9E27-DD15302F0FB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00300300-A716-45CF-9E27-DD15302F0FB4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B69EDF43-5192-4CDF-BE87-8B505CC98F33} = {0298F7DD-5B4C-464D-8A79-291444B98853}
+		{00300300-A716-45CF-9E27-DD15302F0FB4} = {0298F7DD-5B4C-464D-8A79-291444B98853}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {05279EF6-F271-4115-962B-C1AB5582656E}
