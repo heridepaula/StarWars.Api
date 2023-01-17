@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using StarWars.Application.Features.GetPlanetById.Models;
 using StarWars.Application.Features.LoadPlanetById.Models;
 using StarWars.Application.Shared.Domain.Entities;
 using StarWars.Application.Shared.Domain.Models;
@@ -19,14 +20,36 @@ namespace StarWars.WebApi.Controllers
         }
 
         [HttpPost("{id}")]
-        [ProducesResponseType(typeof(Output<Planet>), 200)]
-        [ProducesResponseType(500)]
+        [ProducesResponseType(typeof(Output<Planet>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> LoadPlanetByIdAsync([FromRoute] long id, CancellationToken cancellationToken)
         {
             try
             {
                 var input = new LoadPlanetByIdInput(id);
                 return Ok(await _mediator.Send(input, cancellationToken));
+            }
+            catch (Exception)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [HttpGet("{id}")]
+        [ProducesResponseType(typeof(Output<Planet>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
+        public async Task<IActionResult> GetPlanetByIdAsync([FromRoute] long id, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var input = new GetPlanetByIdInput(id);
+                var planet = await _mediator.Send(input, cancellationToken);
+
+                if (!planet?.Success ?? false)
+                    return NotFound(planet);
+
+                return Ok(planet);
             }
             catch (Exception)
             {
