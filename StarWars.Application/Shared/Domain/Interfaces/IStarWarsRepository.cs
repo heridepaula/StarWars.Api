@@ -9,5 +9,6 @@ namespace StarWars.Application.Shared.Domain.Interfaces
         Task<Film> GetFilmById(long id, CancellationToken cancellationToken);
         Task<IEnumerable<Planet>> GetPlanetByNameAsync(string name, CancellationToken cancellationToken);
         Task<bool> DeletePlanetByIdAsync(Planet planet, CancellationToken cancellationToken);
+        Task<IEnumerable<Planet>> FetchPlanetsAsync(CancellationToken cancellationToken);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using StarWars.Application.Features.DeletePlanetById.Models;
+using StarWars.Application.Features.FetchPlanets.Models;
 using StarWars.Application.Features.GetPlanetById.Models;
 using StarWars.Application.Features.GetPlanetByName.Models;
 using StarWars.Application.Features.LoadPlanetById.Models;
@@ -96,6 +97,28 @@ namespace StarWars.WebApi.Controllers
                     return NotFound();
 
                 return NoContent();
+            }
+            catch (Exception)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(Output<IEnumerable<Planet>>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
+        public async Task<IActionResult> FetchPlanetsAsync(CancellationToken cancellationToken)
+        {
+            try
+            {
+                var input = new FetchPlanetsInput();
+                var planets = await _mediator.Send(input, cancellationToken);
+
+                if (!planets?.Success ?? false)
+                    return NoContent();
+
+                return Ok(planets);
             }
             catch (Exception)
             {
