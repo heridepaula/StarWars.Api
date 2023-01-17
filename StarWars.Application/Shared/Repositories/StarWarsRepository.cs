@@ -26,9 +26,23 @@ namespace StarWars.Application.Shared.Repositories
                                     .FirstOrDefaultAsync(x => x.Id == id, cancellationToken: cancellationToken);
         }
 
+        public async Task<IEnumerable<Planet>> GetPlanetByNameAsync(string name, CancellationToken cancellationToken)
+        {
+            return await _context.Planets
+                            .Include(x => x.Films)
+                            .Where(x => EF.Functions.Like(x.Name, $"%{name}%"))
+                            .ToListAsync(cancellationToken);
+        }
+
         public async Task<Film> GetFilmById(long id, CancellationToken cancellationToken)
         {
             return await _context.Films.Where(x => x.Id == id).FirstOrDefaultAsync(cancellationToken: cancellationToken);
+        }
+
+        public async Task<bool> DeletePlanetByIdAsync(Planet planet, CancellationToken cancellationToken)
+        {
+            _context.Planets.Remove(planet);
+            return (await _context.SaveChangesAsync(cancellationToken)) > 0;
         }
     }
 }

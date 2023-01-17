@@ -7,5 +7,7 @@ namespace StarWars.Application.Shared.Domain.Interfaces
         Task<bool> CreatePlanetAsync(Planet planet, CancellationToken cancellationToken);
         Task<Planet> GetPlanetByIdAsync(long id, CancellationToken cancellationToken);
         Task<Film> GetFilmById(long id, CancellationToken cancellationToken);
+        Task<IEnumerable<Planet>> GetPlanetByNameAsync(string name, CancellationToken cancellationToken);
+        Task<bool> DeletePlanetByIdAsync(Planet planet, CancellationToken cancellationToken);
     }
 }
