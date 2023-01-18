@@ -23,6 +23,13 @@ namespace StarWars.WebApi.Controllers
             _mediator = mediator;
         }
 
+        /// <summary>
+        /// Carrega um planeta pelo ID diretamente da Api https://swapi.dev/ para o base de dados local.
+        /// </summary>
+        /// <param name="id">ID do planeta</param>
+        /// <returns>As informações do planeta requisitado</returns>
+        /// <response code="200">Retorna as informações do planeta</response>
+        /// <response code="500">Internal Server Error</response>
         [HttpPost("{id}")]
         [ProducesResponseType(typeof(Output<Planet>), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
@@ -39,6 +46,14 @@ namespace StarWars.WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Retorna um planeta pelo ID diretamente da base de dados.
+        /// </summary>
+        /// <param name="id">ID do planeta</param>
+        /// <returns>As informações do planeta</returns>
+        /// <response code="200">Retorna as informações do planeta</response>
+        /// <response code="404">Retorna quando o planeta não for encontrados na base de dados</response>
+        /// <response code="500">Internal Server Error</response>
         [HttpGet("{id:long}")]
         [ProducesResponseType(typeof(Output<Planet>), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
@@ -61,6 +76,14 @@ namespace StarWars.WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Retorna um planeta pelo ID diretamente da base de dados.
+        /// </summary>
+        /// <param name="name">Nome ou parte do nome do planeta</param>
+        /// <returns>As informações do planeta</returns>
+        /// <response code="200">Retorna as informações do planeta</response>
+        /// <response code="404">Retorna quando o planeta não for encontrado na base de dados</response>
+        /// <response code="500">Internal Server Error</response>
         [HttpGet("{name:alpha}")]
         [ProducesResponseType(typeof(Output<Planet>), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
@@ -83,6 +106,13 @@ namespace StarWars.WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Exclui um planeta a partir de seu ID
+        /// </summary>
+        /// <param name="id">ID do planeta</param>
+        /// <response code="204">Retorna quando o planeta for excluído da base de dados</response>
+        /// <response code="404">Retorna quando o planeta não for encontrado na base de dados</response>
+        /// <response code="500">Internal Server Error</response>
         [HttpDelete("{id:long}")]
         [ProducesResponseType(typeof(Output<Planet>), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
@@ -105,9 +135,15 @@ namespace StarWars.WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Busca a lista de planetas cadastrados na base de dados
+        /// </summary>
+        /// <response code="200">Retorna a lista de planetas cadastrados na base de dados</response>
+        /// <response code="204">Retorna quando não existirem planetas cadastrados na base de dados</response>
+        /// <response code="500">Internal Server Error</response>
         [HttpGet]
         [ProducesResponseType(typeof(Output<IEnumerable<Planet>>), (int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.NoContent)]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> FetchPlanetsAsync(CancellationToken cancellationToken)
         {

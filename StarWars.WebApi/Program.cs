@@ -6,7 +6,9 @@ using StarWars.Application.Features.LoadPlanetById.DependencyInjection;
 using StarWars.Application.Shared.Contexts;
 using StarWars.Application.Shared.DependencyInjection;
 using StarWars.Application.Shared.Initializers;
+using System.Reflection;
 using System.Text.Json.Serialization;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +35,15 @@ builder.Services.AddGetFilmByIdExtensions();
 builder.Services.AddGetPlanetByNameExtensions();
 builder.Services.AddDeletePlanetByIdExtensions();
 builder.Services.AddServicesExtensions(builder.Configuration);
+
+builder.Services.AddSwaggerGen(opt =>
+{
+    opt.SwaggerDoc("v1", new OpenApiInfo { Title = "TodoAPI", Version = "v1" });
+
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    opt.IncludeXmlComments(xmlPath);
+});
 
 #region Migrations
 using var scope = builder.Services.BuildServiceProvider().GetRequiredService<ApplicationDbContext>();
