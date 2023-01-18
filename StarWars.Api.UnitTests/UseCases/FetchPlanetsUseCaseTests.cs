@@ -1,7 +1,6 @@
 ﻿using AutoFixture;
 using Microsoft.Extensions.Logging;
 using Moq;
-using StarWars.Application.Features.DeletePlanetById.UseCase;
 using StarWars.Application.Features.FetchPlanets.Models;
 using StarWars.Application.Features.FetchPlanets.UseCase;
 using StarWars.Application.Shared.Domain.Entities;
@@ -17,7 +16,7 @@ namespace StarWars.Api.UnitTests.UseCases
         {
             Mocker.GetMock<IStarWarsRepository>()
                 .Setup(x => x.FetchPlanetsAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(Fixture.Build<Planet>().Without(x => x.Films).CreateMany());
+                .ReturnsAsync(CreateManyPlanetsInstance());
 
             var sut = Mocker.CreateInstance<FetchPlanetsUseCase>();
 

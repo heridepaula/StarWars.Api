@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StarWars.Application.Shared.Domain.Entities;
+using System.Diagnostics.CodeAnalysis;
 
 namespace StarWars.Application.Shared.Contexts
 {
+    [ExcludeFromCodeCoverage]
     public class ApplicationDbContext : DbContext
     {
         public DbSet<Planet> Planets { get; set; }

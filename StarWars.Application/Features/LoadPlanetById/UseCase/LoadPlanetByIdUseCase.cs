@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
 using StarWars.Application.Features.GetFilmById.Models;
-using StarWars.Application.Features.GetPlanetByName.UseCase;
 using StarWars.Application.Features.LoadPlanetById.Models;
 using StarWars.Application.Shared.Domain.Entities;
 using StarWars.Application.Shared.Domain.Interfaces;
@@ -88,7 +87,7 @@ namespace StarWars.Application.Features.LoadPlanetById.UseCase
 
             await Task.WhenAll(tasks);
 
-            var results = bag.Where(x => x.Data is not null).Select(x => x.Data) ?? new List<Film>();
+            var results = bag.Where(x => x is not null && x.Data is not null).Select(x => x.Data) ?? new List<Film>();
             films.AddRange(results);
 
             return films;

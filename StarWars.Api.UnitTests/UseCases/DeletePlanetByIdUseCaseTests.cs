@@ -16,7 +16,7 @@ namespace StarWars.Api.UnitTests.UseCases
         {
             Mocker.GetMock<IStarWarsRepository>()
                 .Setup(x => x.GetPlanetByIdAsync(It.IsAny<long>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(Fixture.Build<Planet>().Without(x => x.Films).Create());
+                .ReturnsAsync(CreatePlanetInstance());
 
             Mocker.GetMock<IStarWarsRepository>()
                 .Setup(x => x.DeletePlanetByIdAsync(It.IsAny<Planet>(), It.IsAny<CancellationToken>()))
