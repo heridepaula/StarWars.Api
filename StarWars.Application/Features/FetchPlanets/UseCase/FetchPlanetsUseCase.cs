@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
-using StarWars.Application.Features.DeletePlanetById.UseCase;
 using StarWars.Application.Features.FetchPlanets.Models;
 using StarWars.Application.Shared.Domain.Entities;
 using StarWars.Application.Shared.Domain.Interfaces;
@@ -33,7 +32,7 @@ namespace StarWars.Application.Features.FetchPlanets.UseCase
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "[{Event} - {Message}]", nameof(FetchPlanetsUseCase), ex.Message);
+                _logger.LogError(ex, "[{Event}] - {Message}", nameof(FetchPlanetsUseCase), ex.Message);
                 throw;
             }
         }

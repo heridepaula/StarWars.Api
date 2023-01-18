@@ -2,9 +2,11 @@
 using Microsoft.Extensions.DependencyInjection;
 using StarWars.Application.Shared.Domain.Interfaces;
 using StarWars.Application.Shared.Services;
+using System.Diagnostics.CodeAnalysis;
 
 namespace StarWars.Application.Shared.DependencyInjection
 {
+    [ExcludeFromCodeCoverage]
     public static class ServicesExtensions
     {
         public static IServiceCollection AddServicesExtensions(this IServiceCollection services, IConfiguration config)

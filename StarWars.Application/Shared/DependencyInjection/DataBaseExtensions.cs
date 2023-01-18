@@ -4,9 +4,11 @@ using Microsoft.Extensions.DependencyInjection;
 using StarWars.Application.Shared.Contexts;
 using StarWars.Application.Shared.Domain.Interfaces;
 using StarWars.Application.Shared.Repositories;
+using System.Diagnostics.CodeAnalysis;
 
 namespace StarWars.Application.Shared.DependencyInjection
 {
+    [ExcludeFromCodeCoverage]
     public static class DataBaseExtensions
     {
         public static IServiceCollection AddDataBaseExtensions(this IServiceCollection services, IConfiguration config) =>

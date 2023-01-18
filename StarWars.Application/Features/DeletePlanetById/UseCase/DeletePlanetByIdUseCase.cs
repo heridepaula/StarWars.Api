@@ -25,7 +25,7 @@ namespace StarWars.Application.Features.DeletePlanetById.UseCase
 
                 if (planet is null)
                 {
-                    _logger.LogWarning("{Event} - No planets found for Id {Id}", nameof(DeletePlanetByIdUseCase),  request.Id);
+                    _logger.LogWarning("[{Event}] - No planets found for Id {Id}", nameof(DeletePlanetByIdUseCase),  request.Id);
                     return false;
                 }
 
@@ -33,7 +33,7 @@ namespace StarWars.Application.Features.DeletePlanetById.UseCase
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "[{Event} - {Message}]", nameof(DeletePlanetByIdUseCase), ex.Message);
+                _logger.LogError(ex, "[{Event}] - {Message}", nameof(DeletePlanetByIdUseCase), ex.Message);
                 throw;
             }
         }
