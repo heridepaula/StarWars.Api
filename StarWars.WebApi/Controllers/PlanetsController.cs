@@ -77,7 +77,7 @@ namespace StarWars.WebApi.Controllers
         }
 
         /// <summary>
-        /// Retorna um planeta pelo ID diretamente da base de dados.
+        /// Retorna um planeta pelo nome diretamente da base de dados.
         /// </summary>
         /// <param name="name">Nome ou parte do nome do planeta</param>
         /// <returns>As informações do planeta</returns>
